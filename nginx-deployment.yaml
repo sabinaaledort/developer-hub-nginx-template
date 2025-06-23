@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devhub-nginx-app
+  namespace: my-devhub-nginx-app # Use your project name
+  labels:
+    app: devhub-nginx # A label to identify your application pods
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devhub-nginx
+  template:
+    metadata:
+      labels:
+        app: devhub-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: quay.io/nginx/nginx-unprivileged:latest # The desired image
+          ports:
+            - containerPort: 8080 # This image listens on 8080 by default
+              name: http-web
+          # The unprivileged Nginx image typically handles its own cache permissions correctly.
+          # We'll omit explicit volume mounts for simplicity, as it should work out of the box.

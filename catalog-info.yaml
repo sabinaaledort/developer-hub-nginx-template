@@ -1,0 +1,48 @@
+# catalog-info.yaml
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: simple-nginx-web-app # This is how it will appear in Developer Hub's catalog
+  description: An unprivileged Nginx web server deployed for Developer Hub demo.
+  annotations:
+    # Link to the Kubernetes resource by its labels.
+    # Developer Hub will find K8s resources with these labels in scanned clusters.
+    backstage.io/kubernetes-label-selector: 'app=devhub-nginx'
+    # Optional: Link to source code if it's in a Git repo
+    # backstage.io/source-location: url:https://github.com/your-org/your-nginx-app-repo
+    # Optional: Link to TechDocs documentation
+    # backstage.io/techdocs-ref: dir:.
+    # If using RHACS integration and want to link to RHACS data specifically:
+    # (The RHACS plugin usually figures this out from K8s labels/namespaces if properly configured)
+    # backstage.io/acs-label-selector: 'app=devhub-nginx' # Example if an ACS-specific selector is used
+
+spec:
+  type: service # Type of component (e.g., service, website, library)
+  lifecycle: development # Stage in its lifecycle
+  owner: team-ops # Replace with your team name in Developer Hub
+  system: web-applications # Optional: system it belongs to
+  providesApis:
+    - devhub-nginx-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: devhub-nginx-api
+  description: The Nginx HTTP API exposed by the simple-nginx-app.
+spec:
+  type: openapi
+  lifecycle: production
+  owner: team-ops
+  system: web-applications
+  definition: |
+    openapi: "3.0.0"
+    info:
+      title: Nginx HTTP API
+      version: "1.0.0"
+    paths:
+      /:
+        get:
+          summary: Nginx default page
+          responses:
+            "200":
+              description: Nginx welcome page
