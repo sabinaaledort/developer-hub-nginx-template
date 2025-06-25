@@ -7,7 +7,7 @@ metadata:
   annotations:
     # Link to the Kubernetes resource by its labels.
     # Developer Hub will find K8s resources with these labels in scanned clusters.
-    backstage.io/kubernetes-label-selector: 'app=devhub-nginx'
+    backstage.io/kubernetes-label-selector: 'app=visa-processor'
     # Optional: Link to source code if it's in a Git repo
     # backstage.io/source-location: url:https://github.com/your-org/your-nginx-app-repo
     # Optional: Link to TechDocs documentation
